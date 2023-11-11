@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2022 mochi-mqtt, mochi-co
-// SPDX-FileContributor: mochi-co
+// SPDX-FileCopyrightText: 2023 joaoribeirodasilva
+// SPDX-FileContributor: joaoribeirodasilva
 
 package main
 

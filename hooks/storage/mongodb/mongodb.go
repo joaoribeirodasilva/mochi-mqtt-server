@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2022 mochi-mqtt, mochi-co
-// SPDX-FileContributor: mochi-co
+// SPDX-FileCopyrightText: 2023 joaoribeirodasilva
+// SPDX-FileContributor: joaoribeirodasilva
 
 // Package bolt is provided for historical compatibility and may not be actively updated, you should use the badger hook instead.
 package mongodb
@@ -14,7 +14,6 @@ import (
 	"github.com/mochi-mqtt/server/v2/hooks/storage"
 	"github.com/mochi-mqtt/server/v2/packets"
 	"github.com/mochi-mqtt/server/v2/system"
-	"go.etcd.io/bbolt"
 )
 
 // clientKey returns a primary key for a client.
@@ -44,8 +43,7 @@ func sysInfoKey() string {
 
 // Options contains configuration settings for the bolt instance.
 type Options struct {
-	Options *bbolt.Options
-	Path    string
+	Options *options
 }
 
 // Hook is a persistent storage hook based using boltdb file store as a backend.
@@ -95,8 +93,8 @@ func (h *Hook) Init(config any) error {
 
 	h.config = config.(*Options)
 	if h.config.Options == nil {
-		h.config.Options = &bbolt.Options{
-			Timeout: defaultTimeout,
+		h.config.Options = &Options{
+			timeoutMS: defaultTimeout,
 		}
 	}
 	if h.config.Path == "" {
