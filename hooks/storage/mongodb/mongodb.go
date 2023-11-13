@@ -14,10 +14,12 @@ import (
 	"github.com/mochi-mqtt/server/v2/hooks/storage"
 	"github.com/mochi-mqtt/server/v2/packets"
 	"github.com/mochi-mqtt/server/v2/system"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // clientKey returns a primary key for a client.
 func clientKey(cl *mqtt.Client) string {
+	options.Client().SetTimeout()
 	return cl.ID
 }
 
@@ -49,8 +51,8 @@ type Options struct {
 // Hook is a persistent storage hook based using boltdb file store as a backend.
 type Hook struct {
 	mqtt.HookBase
-	config *Options  // options for configuring the boltdb instance.
-	db     *storm.DB // the boltdb instance.
+	config *options // options for configuring the boltdb instance.
+	//db     *storm.DB // the boltdb instance.
 }
 
 // ID returns the id of the hook.
@@ -102,10 +104,10 @@ func (h *Hook) Init(config any) error {
 	}
 
 	var err error
-	h.db, err = storm.Open(h.config.Path, storm.BoltOptions(0600, h.config.Options), storm.Codec(sgob.Codec))
-	if err != nil {
-		return err
-	}
+	//	h.db, err = storm.Open(h.config.Path, storm.BoltOptions(0600, h.config.Options), storm.Codec(sgob.Codec))
+	//	if err != nil {
+	//		return err
+	//	}
 
 	return nil
 }
